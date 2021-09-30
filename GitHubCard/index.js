@@ -53,7 +53,48 @@ const followersArray = [];
       </div>
     </div>
 */
+function cardMaker({ avatar_url, name, login, location, html_url, followers, following, bio }) {
 
+  const card = document.createElement('div');
+  const image = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const theName = document.createElement('h3');
+  const userName = document.createElement('p');
+  const theLocation = document.createElement('p');
+  const profile = document.createElement('p');
+  const github = document.createElement('a');
+  const theFollowers = document.createElement('p');
+  const theFollowing = document.createElement('p');
+  const theBio = document.createElement('p');
+
+  card.appendChild(image);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(theName);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(theLocation);
+  cardInfo.appendChild(profile);
+  profile.appendChild(github);
+  cardInfo.appendChild(theFollowers);
+  cardInfo.appendChild(theFollowing);
+  cardInfo.appendChild(theBio);
+
+  card.classList.add('.card');
+  cardInfo.classList.add('.card-info');
+  theName.classList.add('.name');
+  userName.classList.add('.username');
+
+  image.src = avatar_url;
+  theName.textContent = name;
+  userName.textContent = login;
+  theLocation.textContent = location;
+  profile.textContent = 'Profile: ';
+  github.textContent = html_url;
+  theFollowers.textContent = `Followers: ${followers}`;
+  theFollowing.textContent = `Following: ${following}`;
+  theBio.textContent = `Bio: ${bio}`
+
+  return card;
+}
 /*
   List of LS Instructors Github username's:
     tetondan
