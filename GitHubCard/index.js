@@ -20,7 +20,27 @@ axios.get('https://api.github.com/users/andrewhunt21')
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
-
+function getUser(gitUserName) {
+  axios.get(`https://api.github.com/users/${gitUserName}`)
+    .then(resp => {
+      const userObj = {
+        avatar: resp.data.avatar_url,
+        name: resp.data.name,
+        login: resp.data.login,
+        location: resp.data.location,
+        url: resp.data.html_url,
+        followers: resp.data.followers,
+        following: resp.data.following,
+        bio: resp.data.bio
+      }
+      const theUsers = cardMaker(userObj);
+      document.querySelector('.cards').appendChild(theUsers);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+} 
+getUser('andrewhunt21');
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
     follow this link in your browser https://api.github.com/users/<Your github name>/followers,
@@ -32,7 +52,17 @@ axios.get('https://api.github.com/users/andrewhunt21')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell',
+];
+
+for (let i = 0; i < followersArray.length; i++) {
+  
+}
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -53,7 +83,7 @@ const followersArray = [];
       </div>
     </div>
 */
-function cardMaker({ avatar_url, name, login, location, html_url, followers, following, bio }) {
+function cardMaker({ avatar, name, login, location, url, followers, following, bio }) {
 
   const card = document.createElement('div');
   const image = document.createElement('img');
@@ -78,17 +108,17 @@ function cardMaker({ avatar_url, name, login, location, html_url, followers, fol
   cardInfo.appendChild(theFollowing);
   cardInfo.appendChild(theBio);
 
-  card.classList.add('.card');
-  cardInfo.classList.add('.card-info');
-  theName.classList.add('.name');
-  userName.classList.add('.username');
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  theName.classList.add('name');
+  userName.classList.add('username');
 
-  image.src = avatar_url;
+  image.src = avatar;
   theName.textContent = name;
   userName.textContent = login;
   theLocation.textContent = location;
   profile.textContent = 'Profile: ';
-  github.textContent = html_url;
+  github.href = url;
   theFollowers.textContent = `Followers: ${followers}`;
   theFollowing.textContent = `Following: ${following}`;
   theBio.textContent = `Bio: ${bio}`
